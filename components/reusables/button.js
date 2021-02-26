@@ -14,7 +14,7 @@ const Button = ({children, ...othersProps}) => {
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 5,
+    // marginTop: 5,
   },
   button: {
     backgroundColor: '#1d3557',

@@ -31,7 +31,7 @@ const MainNavigation = ({users}) => {
         name="Home"
         component={HomeScreen}
         options={{
-          headerShown: true,
+          headerShown: false,
           title: 'Tablea de Bord',
         }}
       />
@@ -39,7 +39,7 @@ const MainNavigation = ({users}) => {
         name="Expeditions"
         component={ExpeditionsScreen}
         options={{
-          headerShown: true,
+          headerShown: false,
           title: 'Expeditions',
         }}
       />

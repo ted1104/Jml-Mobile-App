@@ -1,9 +1,13 @@
 import React, {Component} from 'react';
-import {Text} from 'react-native';
+import {Text, Button, View} from 'react-native';
 
 class HomeScreen extends React.Component {
   render() {
-    return <Text>ACCUEIL </Text>;
+    return (
+      <View>
+        <Text>ACCUEIL</Text>
+      </View>
+    );
   }
 }
 
