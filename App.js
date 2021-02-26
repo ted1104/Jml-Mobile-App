@@ -23,16 +23,19 @@ import {
   DebugInstructions,
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
-
+import {Provider, connect} from 'react-redux';
+import Store from './store/ConfigurationStore';
 import InitNavigation from './navigation/InitNavigation';
 import {NavigationContainer} from '@react-navigation/native';
 
 class App extends React.Component {
   render() {
     return (
-      <NavigationContainer>
-        <InitNavigation />
-      </NavigationContainer>
+      <Provider store={Store}>
+        <NavigationContainer>
+          <InitNavigation />
+        </NavigationContainer>
+      </Provider>
     );
   }
 }
