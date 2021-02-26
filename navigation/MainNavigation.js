@@ -8,6 +8,8 @@ import LoginScreen from './../components/screens/Login';
 import HomeScreen from './../components/screens/Home';
 import ExpeditionsScreen from './../components/screens/Expeditions';
 
+//NAVIGATION
+import CustomDrawerNavigation from './CustomDrawerNavigation';
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
 
@@ -23,13 +25,14 @@ const MainNavigation = ({users}) => {
       />
     </Stack.Navigator>
   ) : (
-    <Drawer.Navigator>
+    <Drawer.Navigator
+      drawerContent={(props) => <CustomDrawerNavigation {...props} />}>
       <Drawer.Screen
-        name="Accueil"
+        name="Home"
         component={HomeScreen}
         options={{
           headerShown: true,
-          title: 'Accueil',
+          title: 'Tablea de Bord',
         }}
       />
       <Drawer.Screen
