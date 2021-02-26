@@ -25,10 +25,15 @@ import {
 } from 'react-native/Libraries/NewAppScreen';
 
 import InitNavigation from './navigation/InitNavigation';
+import {NavigationContainer} from '@react-navigation/native';
 
 class App extends React.Component {
   render() {
-    return <InitNavigation />;
+    return (
+      <NavigationContainer>
+        <InitNavigation />
+      </NavigationContainer>
+    );
   }
 }
 
