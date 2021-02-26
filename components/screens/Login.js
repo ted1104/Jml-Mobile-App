@@ -1,10 +1,19 @@
 import React, {Component} from 'react';
-import {Text, View, StyleSheet} from 'react-native';
-
+import {Text, View, StyleSheet, TouchableOpacity} from 'react-native';
+import {connect} from 'react-redux';
 import Input from './../reusables/input';
 import Buttom from './../reusables/button';
 
 class LoginScreen extends React.Component {
+  constructor(props) {
+    super(props);
+    // console.log(this.props);
+  }
+  _loginFx = () => {
+    const action = {type: 'IS_LOGGED', value: !this.props.usersState.isLogged};
+    this.props.dispatch(action);
+    console.log(this.props);
+  };
   render() {
     return (
       <View style={styles.container}>
@@ -15,7 +24,13 @@ class LoginScreen extends React.Component {
         <View style={styles.containerBloc}>
           <Input placeholder="Nom d'utilisateur" />
           <Input placeholder="Mot de passe" secureTextEntry={true} />
-          <Buttom />
+          <Buttom onPress={this._loginFx}>
+            <Text>Connexion</Text>
+          </Buttom>
+
+          {/* <TouchableOpacity onPress={() => console.log('Her')}>
+            <Text style={styles.textBtn}>HH</Text>
+          </TouchableOpacity> */}
         </View>
       </View>
     );
@@ -51,5 +66,8 @@ const styles = StyleSheet.create({
     // marginBottom: 2,
   },
 });
-
-export default LoginScreen;
+// const mapDispatch
+const mapStateToProps = (state) => ({
+  usersState: state,
+});
+export default connect(mapStateToProps)(LoginScreen);

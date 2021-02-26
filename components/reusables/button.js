@@ -1,11 +1,12 @@
-import React from 'react';
-import {TouchableOpacity, View, StyleSheet, Text} from 'react-native';
+import React, {Children} from 'react';
+import {View, StyleSheet, Text} from 'react-native';
+import {TouchableOpacity} from 'react-native-gesture-handler';
 
-const Input = ({...othersProps}) => {
+const Button = ({children, ...othersProps}) => {
   return (
     <View style={styles.container}>
-      <TouchableOpacity style={styles.button}>
-        <Text style={styles.textBtn}>Connexion</Text>
+      <TouchableOpacity style={styles.button} {...othersProps}>
+        <Text style={styles.textBtn}>{children}</Text>
       </TouchableOpacity>
     </View>
   );
@@ -26,4 +27,4 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
 });
-export default Input;
+export default Button;
