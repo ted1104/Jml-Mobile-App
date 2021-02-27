@@ -10,11 +10,10 @@ class ExpeditionScreen extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <View style={styles.b1}>
-          <Entete>
-            <Text>EXPEDITIONS DU 2021-02-12</Text>
-          </Entete>
-        </View>
+        <Entete props={this.props}>
+          <Text>EXPEDITIONS</Text>
+        </Entete>
+
         <View style={styles.b2}>
           <CartItem />
         </View>
