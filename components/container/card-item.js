@@ -3,14 +3,17 @@ import React from 'react';
 import {Text, StyleSheet, View, TouchableOpacity} from 'react-native';
 import CustomButton from './../reusables/button';
 
-const CardItem = () => {
+const CardItem = ({exp: {bordereau, date_exp}}) => {
+  //   const {bordereau} = item;
   return (
     <TouchableOpacity>
       <View style={styles.container}>
         <View>
           <View style={styles.ententeCard}>
             <View style={styles.element}>
-              <Text style={styles.textRight}>2021-01-10 : 10h30 </Text>
+              <Text style={styles.textRight}>
+                {date_exp} : {bordereau}{' '}
+              </Text>
             </View>
             <View style={styles.status}>
               <Text style={styles.statusText}>Arrivé</Text>
@@ -81,7 +84,7 @@ const styles = StyleSheet.create({
   },
   element: {
     backgroundColor: '#003049',
-    flex: 1,
+    flex: 2,
     paddingLeft: 4,
     borderRadius: 2,
   },
