@@ -2,7 +2,7 @@ import React, {Children} from 'react';
 import {View, StyleSheet, Text} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 
-const FloatButtom = ({children, ...othersProps}) => {
+const RoundButton = ({children, ...othersProps}) => {
   return (
     <View style={styles.container}>
       <TouchableOpacity style={styles.button} {...othersProps}>
@@ -13,13 +13,7 @@ const FloatButtom = ({children, ...othersProps}) => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    position: 'absolute',
-    zIndex: 100000,
-    bottom: 1,
-    bottom: 15,
-    right: 15,
-  },
+  container: {},
   button: {
     backgroundColor: 'red',
     borderRadius: 100,
@@ -35,4 +29,4 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
 });
-export default FloatButtom;
+export default RoundButton;

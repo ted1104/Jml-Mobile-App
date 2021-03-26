@@ -7,6 +7,7 @@ import {createDrawerNavigator} from '@react-navigation/drawer';
 import LoginScreen from './../components/screens/Login';
 import HomeScreen from './../components/screens/Home';
 import ExpeditionsScreen from './../components/screens/Expeditions';
+import AddExpeditionsScreen from './../components/screens/AddExpedition';
 
 //NAVIGATION
 import CustomDrawerNavigation from './CustomDrawerNavigation';
@@ -23,6 +24,11 @@ const MainNavigation = ({users}) => {
           headerShown: false,
         }}
       />
+      {/* <Stack.Screen
+        name="AddExpedition"
+        component={AddExpeditionsScreen}
+        options={{headerShown: false}}
+      /> */}
     </Stack.Navigator>
   ) : (
     <Drawer.Navigator
@@ -38,6 +44,14 @@ const MainNavigation = ({users}) => {
       <Drawer.Screen
         name="Expeditions"
         component={ExpeditionsScreen}
+        options={{
+          headerShown: false,
+          title: 'Expeditions',
+        }}
+      />
+      <Drawer.Screen
+        name="AddExpedition"
+        component={AddExpeditionsScreen}
         options={{
           headerShown: false,
           title: 'Expeditions',

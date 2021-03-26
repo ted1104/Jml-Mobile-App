@@ -17,8 +17,8 @@ const styles = StyleSheet.create({
     // borderColor: 'red',
     // borderWidth: 1,
     backgroundColor: '#e0e0e0',
-    marginBottom: 4,
-    paddingLeft: 10,
+    marginBottom: 5,
+    paddingLeft: 17,
     borderRadius: 5,
   },
 });

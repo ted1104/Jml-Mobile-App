@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {Text, View, Button, StyleSheet, FlatList} from 'react-native';
 import CartItem from './../container/card-item';
 import Entete from './../reusables/Entente';
-import FloatButtom from './../reusables/floatButton';
+import RoundButton from '../reusables/RoundButton';
 import DATA_EXPED from './../../api/data';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
@@ -34,9 +34,12 @@ class ExpeditionScreen extends React.Component {
           />
         </View>
 
-        <FloatButtom>
-          <Icon name="plus-thick" color="#fff" size={20} />
-        </FloatButtom>
+        <View style={styles.float}>
+          <RoundButton
+            onPress={() => this.props.navigation.navigate('AddExpedition')}>
+            <Icon name="plus-thick" color="#fff" size={20} />
+          </RoundButton>
+        </View>
       </View>
     );
   }
@@ -53,11 +56,18 @@ const styles = StyleSheet.create({
     flex: 4,
     backgroundColor: '#fff',
     borderTopLeftRadius: 80,
-    paddingVertical: 20,
+    paddingVertical: 35,
     paddingHorizontal: 15,
   },
   list: {
     flex: 1,
+  },
+  float: {
+    position: 'absolute',
+    zIndex: 100000,
+    bottom: 1,
+    bottom: 15,
+    right: 15,
   },
 });
 
