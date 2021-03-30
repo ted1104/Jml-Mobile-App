@@ -14,7 +14,7 @@ class ExpeditionScreen extends React.Component {
     };
   }
   componentDidMount() {
-    console.log(this.state.expeditionData);
+    // console.log(this.state.expeditionData);
   }
   render() {
     console.log(this.props);

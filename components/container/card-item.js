@@ -83,7 +83,7 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
   element: {
-    backgroundColor: '#003049',
+    backgroundColor: '#457b9d',
     flex: 2,
     paddingLeft: 4,
     borderRadius: 2,

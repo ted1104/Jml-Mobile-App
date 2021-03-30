@@ -7,10 +7,10 @@ const Pannier = ({data}) => {
         <View style={styles.pannierContainer}>
             <View style={[styles.blocColumn,styles.flex_1]}>
                 <Text>{ data.article}</Text>
-                <Text>ART-02</Text>
+                <Text>{data.code_article}</Text>
             </View>
             <View style={[styles.blocColumn,styles.flex_2]}>
-                <Text>12</Text>
+                <Text>{data.qte}</Text>
             </View>
             <View style={[styles.blocColumn,styles.flex_3]}>
                 <Icon name="trash-can" color="#457b9d" size={20} />
