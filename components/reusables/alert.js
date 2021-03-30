@@ -4,13 +4,13 @@ import {View, Text, StyleSheet, Dimensions, Animated} from 'react-native';
 const Alert = ({children, isType = null}) => {
   if (isType == 1) {
     return (
-      <View style={[styles.container, {backgroundColor: 'green'}]}>
+      <View style={[styles.container, {backgroundColor: '#006d77'}]}>
         <Text style={styles.text}>{children}</Text>
       </View>
     );
   } else if (isType == 0) {
     return (
-      <View style={[styles.container, {backgroundColor: 'red'}]}>
+      <View style={[styles.container, {backgroundColor: '#6a040f'}]}>
         <Text style={styles.text}>{children}</Text>
       </View>
     );
@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 5,
     marginHorizontal: 2,
-    borderRadius: 5,
+    borderRadius: 100,
   },
   text: {
     color: 'white',

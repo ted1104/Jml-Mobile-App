@@ -25,6 +25,10 @@ class HomeScreen extends React.Component {
     this.state = {
       dataPannier: [],
       date: getDateToday(),
+      lieu: null,
+      chauffeur: null,
+      telChauffeur: null,
+      plaque: null,
       codeArticle: null,
       qte: 0,
 
@@ -89,10 +93,26 @@ class HomeScreen extends React.Component {
           <ScrollView>
             <View style={styles.form}>
               <Input placeholder="Date" value={this.state.date.toString()} />
-              <Input placeholder="Lieu Destination" />
-              <Input placeholder="Nom Chauffeur" />
-              <Input placeholder="Tél Chauffeur" />
-              <Input placeholder="Plaque vehicule" />
+              <Input
+                placeholder="Lieu Destination"
+                onChangeText={(val) => this._handleChange('lieu', val)}
+                value={this.state.lieu}
+              />
+              <Input
+                placeholder="Nom Chauffeur"
+                onChangeText={(val) => this._handleChange('chauffeur', val)}
+                value={this.state.chauffeur}
+              />
+              <Input
+                placeholder="Tél Chauffeur"
+                onChangeText={(val) => this._handleChange('telChauffeur', val)}
+                value={this.state.telChauffeur}
+              />
+              <Input
+                placeholder="Plaque vehicule"
+                onChangeText={(val) => this._handleChange('plaque', val)}
+                value={this.state.plaque}
+              />
             </View>
             <View style={styles.formArticle}>
               <View style={styles.formCode}>

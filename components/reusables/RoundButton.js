@@ -15,7 +15,7 @@ const RoundButton = ({children, ...othersProps}) => {
 const styles = StyleSheet.create({
   container: {},
   button: {
-    backgroundColor: 'red',
+    backgroundColor: '#6a040f',
     borderRadius: 100,
     width: 50,
     height: 50,
