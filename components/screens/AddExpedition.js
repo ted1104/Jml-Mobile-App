@@ -7,6 +7,7 @@ import {
   ScrollView,
   ViewBase,
   FlatList,
+  Pick,
 } from 'react-native';
 import Entete from './../reusables/Entente';
 import Input from './../reusables/input';
@@ -14,7 +15,8 @@ import Pannier from '../reusables/pannier';
 import RoundBouton from './../reusables/RoundButton';
 import Empty from './../reusables/empty';
 import Alert from './../reusables/alert';
-import PANNIER_DATA from './../../api/pannier';
+// import PANNIER_DATA from './../../api/pannier';
+import {getDateToday} from './../helpers/helpers';
 import {getCreateLineArticle} from './../../api/db';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 class HomeScreen extends React.Component {
@@ -22,6 +24,7 @@ class HomeScreen extends React.Component {
     super(props);
     this.state = {
       dataPannier: [],
+      date: getDateToday(),
       codeArticle: null,
       qte: 0,
 
@@ -30,12 +33,12 @@ class HomeScreen extends React.Component {
       messageError: null,
     };
     this.dataPannierArt = [];
+    this.timerID;
   }
   _addArticle = () => {
     getCreateLineArticle(this.state.codeArticle, this.state.qte, 6).then(
       (res) => {
         if (res.data.message.success != null) {
-          console.log('Here');
           this.dataPannierArt.push({
             article: res.data.data.nom_article,
             code_article: res.data.data.code,
@@ -46,9 +49,10 @@ class HomeScreen extends React.Component {
             codeArticle: null,
             qte: 0,
           });
+          this._setErrorParams(1, res.data.message.success);
+          return;
         }
         this._setErrorParams(0, res.data.message.errors);
-        console.log(res.data.message.errors);
       },
     );
   };
@@ -58,6 +62,10 @@ class HomeScreen extends React.Component {
   _setErrorParams = (isType, messageError) => {
     this.setState({isType: isType});
     this.setState({messageError: messageError});
+    this.timerID = setTimeout(() => {
+      this.setState({isType: null});
+      clearTimeout(this.timerID);
+    }, 3000);
   };
   _showMessageAlerte = () => {
     if (this.state.isType != null)
@@ -67,7 +75,7 @@ class HomeScreen extends React.Component {
   };
 
   componentDidMount() {
-    console.log(this.state.dataPannier);
+    console.log(this.state.date);
   }
   render() {
     // console.log('--render--');
@@ -80,7 +88,7 @@ class HomeScreen extends React.Component {
         <View style={styles.b2}>
           <ScrollView>
             <View style={styles.form}>
-              <Input placeholder="Date" />
+              <Input placeholder="Date" value={this.state.date.toString()} />
               <Input placeholder="Lieu Destination" />
               <Input placeholder="Nom Chauffeur" />
               <Input placeholder="Tél Chauffeur" />

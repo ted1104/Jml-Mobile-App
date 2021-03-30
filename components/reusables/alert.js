@@ -1,5 +1,5 @@
-import React from 'react';
-import {View, Text, StyleSheet, Dimensions} from 'react-native';
+import React, {useRef} from 'react';
+import {View, Text, StyleSheet, Dimensions, Animated} from 'react-native';
 
 const Alert = ({children, isType = null}) => {
   if (isType == 1) {
@@ -23,8 +23,8 @@ const styles = StyleSheet.create({
     color: 'white',
     top: 0,
     width: Dimensions.get('window').width - 4,
-
     paddingVertical: 10,
+    paddingHorizontal: 5,
     marginHorizontal: 2,
     borderRadius: 5,
   },
