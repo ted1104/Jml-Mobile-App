@@ -14,6 +14,7 @@ import Pannier from '../reusables/pannier';
 import RoundBouton from './../reusables/RoundButton';
 import Empty from './../reusables/empty';
 import PANNIER_DATA from './../../api/pannier';
+import {getCreateLineArticle} from './../../api/db';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 class HomeScreen extends React.Component {
   constructor(props) {
@@ -26,16 +27,24 @@ class HomeScreen extends React.Component {
     this.dataPannierArt = [];
   }
   _addArticle = () => {
-    this.dataPannierArt.push({
-      article: 'NAM ARTCILE',
-      code_article: this.state.codeArticle,
-      qte: this.state.qte,
-    });
-    this.setState({dataPannier: this.dataPannierArt});
-    this.setState({
-      codeArticle: null,
-      qte: 0,
-    });
+    getCreateLineArticle(this.state.codeArticle, this.state.qte, 6).then(
+      (res) => {
+        if (res.data.message.success != null) {
+          console.log('Here');
+          this.dataPannierArt.push({
+            article: res.data.data.nom_article,
+            code_article: res.data.data.code,
+            qte: res.data.data.qte,
+          });
+          this.setState({dataPannier: this.dataPannierArt});
+          this.setState({
+            codeArticle: null,
+            qte: 0,
+          });
+        }
+        console.log(res.data.message.errors);
+      },
+    );
   };
   _handleChange = (key, val) => {
     this.setState({[key]: val});
