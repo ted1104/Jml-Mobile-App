@@ -13,6 +13,7 @@ import Input from './../reusables/input';
 import Pannier from '../reusables/pannier';
 import RoundBouton from './../reusables/RoundButton';
 import Empty from './../reusables/empty';
+import Alert from './../reusables/alert';
 import PANNIER_DATA from './../../api/pannier';
 import {getCreateLineArticle} from './../../api/db';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -23,6 +24,10 @@ class HomeScreen extends React.Component {
       dataPannier: [],
       codeArticle: null,
       qte: 0,
+
+      //CONFIG POPUP
+      isType: null, //1 : success, 0 : failed
+      messageError: null,
     };
     this.dataPannierArt = [];
   }
@@ -42,6 +47,7 @@ class HomeScreen extends React.Component {
             qte: 0,
           });
         }
+        this._setErrorParams(0, res.data.message.errors);
         console.log(res.data.message.errors);
       },
     );
@@ -49,6 +55,17 @@ class HomeScreen extends React.Component {
   _handleChange = (key, val) => {
     this.setState({[key]: val});
   };
+  _setErrorParams = (isType, messageError) => {
+    this.setState({isType: isType});
+    this.setState({messageError: messageError});
+  };
+  _showMessageAlerte = () => {
+    if (this.state.isType != null)
+      return (
+        <Alert isType={this.state.isType}>{this.state.messageError}</Alert>
+      );
+  };
+
   componentDidMount() {
     console.log(this.state.dataPannier);
   }
@@ -107,6 +124,9 @@ class HomeScreen extends React.Component {
             </View>
           </ScrollView>
         </View>
+
+        {/* SHOW ERROR MESSAGE */}
+        {this._showMessageAlerte()}
       </View>
     );
   }
