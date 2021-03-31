@@ -18,6 +18,18 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 class DrawerCustomNavigation extends React.Component {
   constructor(props) {
     super(props);
+    this.name = null;
+    this.prenom = null;
+    this.profile = null;
+    this.lieu = null;
+  }
+  componentDidMount() {}
+  componentDidUpdate() {
+    this.name = this.props.userData.dataUser.users.info[0].nom;
+    this.prenom = this.props.userData.dataUser.users.info[0].prenom;
+    this.profile = this.props.userData.dataUser.profile;
+    this.lieu = this.props.userData.dataUser.lieuAffectation;
+    // console.log(this.props.userData.dataUser.users.info[0].nom);
   }
   render() {
     return (
@@ -32,8 +44,11 @@ class DrawerCustomNavigation extends React.Component {
               />
             </View>
             <View style={styles.text}>
-              <Text style={styles.titlemain}>Teddy Walter</Text>
-              <Caption>Expediteur</Caption>
+              <Text style={styles.titlemain}>
+                {this.name + ' ' + this.prenom}
+              </Text>
+              <Caption>{this.profile}</Caption>
+              <Caption>{this.lieu}</Caption>
             </View>
           </View>
           <Drawer.Section>
@@ -55,6 +70,15 @@ class DrawerCustomNavigation extends React.Component {
               onPress={() =>
                 this.props.navigation.navigate('Expeditions')
               }></DrawerItem>
+            <DrawerItem
+              icon={({color, size}) => (
+                <Icon name="arrow-expand" color="#a8dadc" size={size} />
+              )}
+              label="Receptions"
+              labelStyle={styles.itemMeu}
+              onPress={() =>
+                this.props.navigation.navigate('Expeditions')
+              }></DrawerItem>
           </Drawer.Section>
         </DrawerContentScrollView>
         <Drawer.Section>
@@ -65,7 +89,7 @@ class DrawerCustomNavigation extends React.Component {
             label="Deconnexion"
             labelStyle={styles.itemMeu}
             onPress={() => {
-              conosole.log('Deconnexion');
+              console.log('Deconnexion');
             }}></DrawerItem>
         </Drawer.Section>
       </View>
@@ -101,4 +125,5 @@ const styles = StyleSheet.create({
     color: '#e5e5e5',
   },
 });
+
 export default DrawerCustomNavigation;

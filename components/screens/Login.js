@@ -1,5 +1,9 @@
 import React, {Component} from 'react';
 import {Text, View, StyleSheet, TouchableOpacity} from 'react-native';
+import {
+  isLogged,
+  setProfileUser,
+} from './../../store/reducers/users/users.actions';
 import {connect} from 'react-redux';
 import Input from './../reusables/input';
 import Buttom from './../reusables/button';
@@ -23,15 +27,14 @@ class LoginScreen extends React.Component {
   _loginFx = () => {
     login(this.state.username, this.state.password)
       .then((res) => {
-        // console.log(res.data.message);
         if (res.data.message == null) {
-          // console.log('connected' + res.data.isLoggedIn);
-          const action = {type: 'IS_LOGGED', value: res.data.isLoggedIn};
-          this.props.dispatch(action);
+          this.props.isLog(res.data.isLoggedIn);
+          this.props.setDataProfile(res.data.data);
           return;
+        } else {
+          this._setErrorParams(0, res.data.message);
+          console.log('error connexion');
         }
-        this._setErrorParams(0, res.data.message);
-        console.log('error connexion');
       })
       .catch((error) => console.log(`Erreur request ${error}`));
   };
@@ -122,7 +125,11 @@ const styles = StyleSheet.create({
   },
 });
 // const mapDispatch
+const mapToDispatchToProps = (dispatch) => ({
+  isLog: (item) => dispatch(isLogged(item)),
+  setDataProfile: (item) => dispatch(setProfileUser(item)),
+});
 const mapStateToProps = (state) => ({
   usersState: state,
 });
-export default connect(mapStateToProps)(LoginScreen);
+export default connect(mapStateToProps, mapToDispatchToProps)(LoginScreen);

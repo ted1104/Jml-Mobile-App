@@ -1,16 +1,18 @@
+import {UsersActionsType} from './users.type';
+
 const initialState = {
   isLogged: false,
-  dataUser: null,
+  dataUser: [],
 };
 
 function usersActions(state = initialState, action) {
   switch (action.type) {
-    case 'IS_LOGGED':
+    case UsersActionsType.IS_LOGGED:
       return {
         ...state,
         isLogged: action.value,
       };
-    case 'SET_PROFILE_DATA':
+    case UsersActionsType.SET_PROFILE_DATA:
       return {
         ...state,
         dataUser: action.value,

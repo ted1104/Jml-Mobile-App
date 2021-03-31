@@ -3,6 +3,7 @@ import {Text} from 'react-native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 
+import {connect} from 'react-redux';
 //COMPONENT EXPORTS
 import LoginScreen from './../components/screens/Login';
 import HomeScreen from './../components/screens/Home';
@@ -14,7 +15,7 @@ import CustomDrawerNavigation from './CustomDrawerNavigation';
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
 
-const MainNavigation = ({users}) => {
+const MainNavigation = ({users, usersState}) => {
   return !users.isLogged ? (
     <Stack.Navigator headerMode="screen">
       <Stack.Screen
@@ -32,13 +33,15 @@ const MainNavigation = ({users}) => {
     </Stack.Navigator>
   ) : (
     <Drawer.Navigator
-      drawerContent={(props) => <CustomDrawerNavigation {...props} />}>
+      drawerContent={(props) => (
+        <CustomDrawerNavigation {...props} userData={usersState} />
+      )}>
       <Drawer.Screen
         name="Home"
         component={HomeScreen}
         options={{
           headerShown: false,
-          title: 'Tablea de Bord',
+          title: 'Tableau de Bord',
         }}
       />
       <Drawer.Screen
@@ -57,8 +60,18 @@ const MainNavigation = ({users}) => {
           title: 'Expeditions',
         }}
       />
+      <Drawer.Screen
+        name="Receptions"
+        component={ExpeditionsScreen}
+        options={{
+          headerShown: false,
+          title: 'Receptions',
+        }}
+      />
     </Drawer.Navigator>
   );
 };
-
-export default MainNavigation;
+const mapToStateProps = (state) => ({
+  usersState: state,
+});
+export default connect(mapToStateProps)(MainNavigation);
