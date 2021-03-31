@@ -3,41 +3,96 @@ import {Text, View, StyleSheet, TouchableOpacity} from 'react-native';
 import {connect} from 'react-redux';
 import Input from './../reusables/input';
 import Buttom from './../reusables/button';
+import {login} from './../../api/db';
+import Alert from './../reusables/alert';
 
 class LoginScreen extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      username: null,
+      password: null,
+
+      //CONFIG POPUP
+      isType: null, //1 : success, 0 : failed
+      messageError: null,
+    };
+
     // console.log(this.props);
   }
   _loginFx = () => {
-    const action = {type: 'IS_LOGGED', value: !this.props.usersState.isLogged};
-    this.props.dispatch(action);
-    console.log(this.props);
+    login(this.state.username, this.state.password)
+      .then((res) => {
+        // console.log(res.data.message);
+        if (res.data.message == null) {
+          // console.log('connected' + res.data.isLoggedIn);
+          const action = {type: 'IS_LOGGED', value: res.data.isLoggedIn};
+          this.props.dispatch(action);
+          return;
+        }
+        this._setErrorParams(0, res.data.message);
+        console.log('error connexion');
+      })
+      .catch((error) => console.log(`Erreur request ${error}`));
+  };
+
+  _hanldeChange = (key, val) => {
+    this.setState({[key]: val});
+  };
+
+  _setErrorParams = (isType, messageError) => {
+    this.setState({isType: isType});
+    this.setState({messageError: messageError});
+    this.timerID = setTimeout(() => {
+      this.setState({isType: null});
+      clearTimeout(this.timerID);
+    }, 3000);
+  };
+  _showMessageAlerte = () => {
+    if (this.state.isType != null)
+      return (
+        <Alert isType={this.state.isType}>{this.state.messageError}</Alert>
+      );
   };
   render() {
     return (
-      <View style={styles.container}>
-        <View style={styles.containerTilte}>
-          <Text style={styles.title}>JML SYSTEM</Text>
-          <Text style={styles.titleSecond}>Se connecter !</Text>
-        </View>
-        <View style={styles.containerBloc}>
-          <Input placeholder="Nom d'utilisateur" />
-          <Input placeholder="Mot de passe" secureTextEntry={true} />
-          <Buttom onPress={this._loginFx}>
-            <Text>Connexion</Text>
-          </Buttom>
+      <View style={styles.containermain}>
+        <View style={styles.container}>
+          <View style={styles.containerTilte}>
+            <Text style={styles.title}>JML SYSTEM</Text>
+            <Text style={styles.titleSecond}>Se connecter !</Text>
+          </View>
+          <View style={styles.containerBloc}>
+            <Input
+              placeholder="Nom d'utilisateur"
+              onChangeText={(val) => this._hanldeChange('username', val)}
+            />
+            <Input
+              placeholder="Mot de passe"
+              secureTextEntry={true}
+              onChangeText={(val) => this._hanldeChange('password', val)}
+            />
+            <Buttom onPress={this._loginFx}>
+              <Text>Connexion</Text>
+            </Buttom>
 
-          {/* <TouchableOpacity onPress={() => console.log('Her')}>
+            {/* <TouchableOpacity onPress={() => console.log('Her')}>
             <Text style={styles.textBtn}>HH</Text>
           </TouchableOpacity> */}
+          </View>
         </View>
+
+        {/* SHOW ERROR MESSAGE */}
+        {this._showMessageAlerte()}
       </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
+  containermain: {
+    flex: 1,
+  },
   container: {
     flex: 1,
     alignContent: 'center',

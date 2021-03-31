@@ -8,11 +8,11 @@ const URL_PATH = 'http://192.168.43.103/GestionBoutique/api/v1/';
 
 export function login(username, pwd) {
   const url = URL_PATH + 'login-users-mobile';
-  var formData = new FormData();
-  formData.append('username', username);
-  formData.append('password_main', pwd);
+  var form = new FormData();
+  form.append('username', username);
+  form.append('password_main', pwd);
   return axios
-    .post(url, formData, {headers: TOKE_CONFIG})
+    .post(url, form, {headers: TOKE_CONFIG})
     .then((response) => response)
     .catch((error) => console.log(`Erreur request ${error}`));
 }

@@ -14,6 +14,8 @@ const Alert = ({children, isType = null}) => {
         <Text style={styles.text}>{children}</Text>
       </View>
     );
+  } else {
+    return null;
   }
 };
 

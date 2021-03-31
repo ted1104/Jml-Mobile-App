@@ -1,5 +1,6 @@
 const initialState = {
   isLogged: false,
+  dataUser: null,
 };
 
 function usersActions(state = initialState, action) {
@@ -8,6 +9,11 @@ function usersActions(state = initialState, action) {
       return {
         ...state,
         isLogged: action.value,
+      };
+    case 'SET_PROFILE_DATA':
+      return {
+        ...state,
+        dataUser: action.value,
       };
     default:
       return state;
