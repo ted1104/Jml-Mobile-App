@@ -7,6 +7,7 @@ import {
   ScrollView,
   ViewBase,
   FlatList,
+  Dimensions,
 } from 'react-native';
 import Entete from './../reusables/Entente';
 import Input from './../reusables/input';
@@ -15,6 +16,8 @@ import RoundBouton from './../reusables/RoundButton';
 import Empty from './../reusables/empty';
 import Alert from './../reusables/alert';
 import SelectInput from './../reusables/selectInput';
+
+import Buttom from './../reusables/button';
 // import PANNIER_DATA from './../../api/pannier';
 import {getDateToday} from './../helpers/helpers';
 import {getCreateLineArticle} from './../../api/db';
@@ -35,9 +38,16 @@ class HomeScreen extends React.Component {
       //CONFIG POPUP
       isType: null, //1 : success, 0 : failed
       messageError: null,
+
+      //POUR SELECT OPTION
+      selectedValue: null,
     };
     this.dataPannierArt = [];
     this.timerID;
+    this.options = [
+      {label: 'Bukavu', value: 1},
+      {label: 'Goma', value: 2},
+    ];
   }
   _addArticle = () => {
     getCreateLineArticle(this.state.codeArticle, this.state.qte, 6).then(
@@ -61,7 +71,7 @@ class HomeScreen extends React.Component {
     );
   };
   _handleChange = (key, val) => {
-    this.setState({[key]: val});
+    this.setState({[key]: val}, () => console.log(this.state.selectedValue));
   };
   _setErrorParams = (isType, messageError) => {
     this.setState({isType: isType});
@@ -79,10 +89,10 @@ class HomeScreen extends React.Component {
   };
 
   componentDidMount() {
-    console.log(this.state.date);
+    console.log(this.state.selectedValue);
   }
   render() {
-    // console.log('--render--');
+    console.log('--render--');
     return (
       <View style={styles.container}>
         <Entete props={this.props}>
@@ -90,11 +100,22 @@ class HomeScreen extends React.Component {
         </Entete>
         {/* CORPS */}
         <View style={styles.b2}>
+          <View style={styles.saveBtnBloc}>
+            <Buttom>
+              <Text>Enregister</Text>
+            </Buttom>
+          </View>
           <ScrollView>
             <View style={styles.form}>
               <Input placeholder="Date" value={this.state.date.toString()} />
 
-              <SelectInput />
+              <SelectInput
+                selectedValue={this.state.selectedValue}
+                onValueChange={(val) =>
+                  this._handleChange('selectedValue', val)
+                }
+                options={this.options}
+              />
               <Input
                 placeholder="Nom Chauffeur"
                 onChangeText={(val) => this._handleChange('chauffeur', val)}
@@ -206,6 +227,12 @@ const styles = StyleSheet.create({
   },
   blocPannier: {
     marginTop: 10,
+  },
+  saveBtnBloc: {
+    // borderWidth: 1,
+    width: Dimensions.get('window').width / 2,
+    alignSelf: 'flex-end',
+    marginBottom: 5,
   },
 });
 
