@@ -11,6 +11,8 @@ import {
   Switch,
   Avatar,
 } from 'react-native-paper';
+import {connect} from 'react-redux';
+import {isLogged} from './../store/reducers/users/users.actions';
 import {DrawerContentScrollView, DrawerItem} from '@react-navigation/drawer';
 import {View} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -89,7 +91,8 @@ class DrawerCustomNavigation extends React.Component {
             label="Deconnexion"
             labelStyle={styles.itemMeu}
             onPress={() => {
-              console.log('Deconnexion');
+              this.props.disconnect(false);
+              // console.log('Deconnexion');
             }}></DrawerItem>
         </Drawer.Section>
       </View>
@@ -125,5 +128,7 @@ const styles = StyleSheet.create({
     color: '#e5e5e5',
   },
 });
-
-export default DrawerCustomNavigation;
+const mapToDispatchToProps = (dispatch) => ({
+  disconnect: (item) => dispatch(isLogged(item)),
+});
+export default connect(null, mapToDispatchToProps)(DrawerCustomNavigation);
