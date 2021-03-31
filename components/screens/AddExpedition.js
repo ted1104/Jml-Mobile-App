@@ -7,7 +7,6 @@ import {
   ScrollView,
   ViewBase,
   FlatList,
-  Pick,
 } from 'react-native';
 import Entete from './../reusables/Entente';
 import Input from './../reusables/input';
@@ -15,6 +14,7 @@ import Pannier from '../reusables/pannier';
 import RoundBouton from './../reusables/RoundButton';
 import Empty from './../reusables/empty';
 import Alert from './../reusables/alert';
+import SelectInput from './../reusables/selectInput';
 // import PANNIER_DATA from './../../api/pannier';
 import {getDateToday} from './../helpers/helpers';
 import {getCreateLineArticle} from './../../api/db';
@@ -93,11 +93,8 @@ class HomeScreen extends React.Component {
           <ScrollView>
             <View style={styles.form}>
               <Input placeholder="Date" value={this.state.date.toString()} />
-              <Input
-                placeholder="Lieu Destination"
-                onChangeText={(val) => this._handleChange('lieu', val)}
-                value={this.state.lieu}
-              />
+
+              <SelectInput />
               <Input
                 placeholder="Nom Chauffeur"
                 onChangeText={(val) => this._handleChange('chauffeur', val)}
