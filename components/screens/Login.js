@@ -27,7 +27,7 @@ class LoginScreen extends React.Component {
       isLoading: false,
     };
 
-    // console.log(this.props);
+    console.log(this.props.navigation);
   }
   _loginFx = () => {
     this.setState({isLoading: !this.state.isLoading});

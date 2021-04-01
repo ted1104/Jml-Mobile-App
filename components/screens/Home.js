@@ -4,6 +4,7 @@ import Entete from './../reusables/Entente';
 class HomeScreen extends React.Component {
   constructor(props) {
     super(props);
+    // console.log(this.props.navigation);
   }
   render() {
     return (

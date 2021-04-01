@@ -17,7 +17,8 @@ class ExpeditionScreen extends React.Component {
     // console.log(this.state.expeditionData);
   }
   render() {
-    console.log(this.props);
+    console.log('===Expedtions===');
+    console.log(this.props.navigation);
     return (
       <View style={styles.container}>
         <Entete props={this.props}>

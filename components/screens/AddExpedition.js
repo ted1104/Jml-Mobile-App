@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, useEffect} from 'react';
 import {
   Text,
   Button,
@@ -16,13 +16,14 @@ import RoundBouton from './../reusables/RoundButton';
 import Empty from './../reusables/empty';
 import Alert from './../reusables/alert';
 import SelectInput from './../reusables/selectInput';
+import Loading from './../reusables/loading';
 
 import Buttom from './../reusables/button';
 // import PANNIER_DATA from './../../api/pannier';
 import {getDateToday} from './../helpers/helpers';
 import {getCreateLineArticle} from './../../api/db';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-class HomeScreen extends React.Component {
+class AddExpeditionsScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -41,6 +42,9 @@ class HomeScreen extends React.Component {
 
       //POUR SELECT OPTION
       selectedValue: null,
+      //CONFIG LOAD
+      isLoading: false,
+      isLoadingAction: false,
     };
     this.dataPannierArt = [];
     this.timerID;
@@ -49,7 +53,9 @@ class HomeScreen extends React.Component {
       {label: 'Goma', value: 2},
     ];
   }
+
   _addArticle = () => {
+    this.setState({isLoadingAction: !this.state.isLoadingAction});
     getCreateLineArticle(this.state.codeArticle, this.state.qte, 6).then(
       (res) => {
         if (res.data.message.success != null) {
@@ -64,9 +70,11 @@ class HomeScreen extends React.Component {
             qte: 0,
           });
           this._setErrorParams(1, res.data.message.success);
+          this.setState({isLoadingAction: !this.state.isLoadingAction});
           return;
         }
         this._setErrorParams(0, res.data.message.errors);
+        this.setState({isLoadingAction: !this.state.isLoadingAction});
       },
     );
   };
@@ -89,8 +97,20 @@ class HomeScreen extends React.Component {
   };
 
   componentDidMount() {
-    console.log(this.state.selectedValue);
+    console.log('did mount');
   }
+
+  componentDidUpdate() {
+    console.log('did mount updated');
+  }
+  componentWillUnmount() {
+    console.log('did mount umounted');
+    this.dataPannierArt = [];
+  }
+  componentDidCatch() {
+    console.log('did mount cathc');
+  }
+
   render() {
     console.log('--render--');
     return (
@@ -148,9 +168,13 @@ class HomeScreen extends React.Component {
                 />
               </View>
               <View style={styles.formBtn}>
-                <RoundBouton onPress={this._addArticle}>
-                  <Icon name="plus-thick" color="#fff" size={20} />
-                </RoundBouton>
+                {!this.state.isLoadingAction ? (
+                  <RoundBouton onPress={this._addArticle}>
+                    <Icon name="plus-thick" color="#fff" size={20} />
+                  </RoundBouton>
+                ) : (
+                  <Loading size={50} />
+                )}
               </View>
             </View>
 
@@ -236,4 +260,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default HomeScreen;
+export default AddExpeditionsScreen;

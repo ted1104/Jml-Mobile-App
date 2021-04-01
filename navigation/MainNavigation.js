@@ -26,8 +26,8 @@ const MainNavigation = ({users, usersState}) => {
         }}
       />
       {/* <Stack.Screen
-        name="AddExpedition"
-        component={AddExpeditionsScreen}
+        name="Expeditions"
+        component={ExpeditionsScreen}
         options={{headerShown: false}}
       /> */}
     </Stack.Navigator>
@@ -58,6 +58,7 @@ const MainNavigation = ({users, usersState}) => {
         options={{
           headerShown: false,
           title: 'Expeditions',
+          unmountOnBlur: true,
         }}
       />
       <Drawer.Screen
