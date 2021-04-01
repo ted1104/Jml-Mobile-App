@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {Text, View, StyleSheet, TouchableOpacity} from 'react-native';
+
 import {
   isLogged,
   setProfileUser,
@@ -7,6 +8,7 @@ import {
 import {connect} from 'react-redux';
 import Input from './../reusables/input';
 import Buttom from './../reusables/button';
+import Loading from './../reusables/loading';
 import {login} from './../../api/db';
 import Alert from './../reusables/alert';
 
@@ -20,21 +22,26 @@ class LoginScreen extends React.Component {
       //CONFIG POPUP
       isType: null, //1 : success, 0 : failed
       messageError: null,
+
+      //CONFIG LOAD
+      isLoading: false,
     };
 
     // console.log(this.props);
   }
   _loginFx = () => {
+    this.setState({isLoading: !this.state.isLoading});
     login(this.state.username, this.state.password)
       .then((res) => {
         if (res.data.message == null) {
+          this.setState({isLoading: !this.state.isLoading});
           this.props.isLog(res.data.isLoggedIn);
           this.props.setDataProfile(res.data.data);
+
           return;
-        } else {
-          this._setErrorParams(0, res.data.message);
-          console.log('error connexion');
         }
+        this._setErrorParams(0, res.data.message);
+        this.setState({isLoading: !this.state.isLoading});
       })
       .catch((error) => console.log(`Erreur request ${error}`));
   };
@@ -75,9 +82,13 @@ class LoginScreen extends React.Component {
               secureTextEntry={true}
               onChangeText={(val) => this._hanldeChange('password', val)}
             />
-            <Buttom onPress={this._loginFx}>
-              <Text>Connexion</Text>
-            </Buttom>
+            {!this.state.isLoading ? (
+              <Buttom onPress={this._loginFx}>
+                <Text>Connexion</Text>
+              </Buttom>
+            ) : (
+              <Loading size={50} />
+            )}
 
             {/* <TouchableOpacity onPress={() => console.log('Her')}>
             <Text style={styles.textBtn}>HH</Text>
