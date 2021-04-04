@@ -59,11 +59,28 @@ class AddExpeditionsScreen extends React.Component {
     getCreateLineArticle(this.state.codeArticle, this.state.qte, 6).then(
       (res) => {
         if (res.data.message.success != null) {
-          this.dataPannierArt.push({
+          var newLine = {
             article: res.data.data.nom_article,
             code_article: res.data.data.code,
             qte: res.data.data.qte,
-          });
+          };
+
+          //Test if article existe deja
+          if (
+            this.dataPannierArt.find(
+              (items) => items.code_article === newLine.code_article,
+            )
+          ) {
+            this.dataPannierArt = this.dataPannierArt.map((item) =>
+              item.code_article == newLine.code_article
+                ? {...item, qte: parseInt(item.qte) + parseInt(newLine.qte)}
+                : item,
+            );
+          } else {
+            this.dataPannierArt.push(newLine);
+          }
+
+          console.log(this.dataPannierArt);
           this.setState({dataPannier: this.dataPannierArt});
           this.setState({
             codeArticle: null,
