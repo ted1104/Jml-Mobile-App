@@ -9,6 +9,8 @@ import LoginScreen from './../components/screens/Login';
 import HomeScreen from './../components/screens/Home';
 import ExpeditionsScreen from './../components/screens/Expeditions';
 import AddExpeditionsScreen from './../components/screens/AddExpedition';
+import ReceptionsScreen from './../components/screens/Receptions';
+import AddReceptionsScreen from './../components/screens/AddReception';
 
 //NAVIGATION
 import CustomDrawerNavigation from './CustomDrawerNavigation';
@@ -63,10 +65,19 @@ const MainNavigation = ({users, usersState}) => {
       />
       <Drawer.Screen
         name="Receptions"
-        component={ExpeditionsScreen}
+        component={ReceptionsScreen}
         options={{
           headerShown: false,
           title: 'Receptions',
+        }}
+      />
+      <Drawer.Screen
+        name="AddReceptions"
+        component={AddReceptionsScreen}
+        options={{
+          headerShown: false,
+          title: 'Add Reception',
+          unmountOnBlur: true,
         }}
       />
     </Drawer.Navigator>

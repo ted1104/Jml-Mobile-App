@@ -79,7 +79,7 @@ class DrawerCustomNavigation extends React.Component {
               label="Receptions"
               labelStyle={styles.itemMeu}
               onPress={() =>
-                this.props.navigation.navigate('Expeditions')
+                this.props.navigation.navigate('Receptions')
               }></DrawerItem>
           </Drawer.Section>
         </DrawerContentScrollView>
