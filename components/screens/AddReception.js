@@ -21,7 +21,7 @@ import Loading from '../reusables/loading';
 import Buttom from '../reusables/button';
 // import PANNIER_DATA from './../../api/pannier';
 import {getDateToday} from '../helpers/helpers';
-import {getCreateLineArticle} from '../../api/db';
+import {getCreateLineArticleReception} from '../../api/db';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 class AddReceptionsScreen extends React.Component {
   constructor(props) {
@@ -55,45 +55,49 @@ class AddReceptionsScreen extends React.Component {
   }
 
   _addArticle = () => {
-    this.setState({isLoadingAction: !this.state.isLoadingAction});
-    getCreateLineArticle(this.state.codeArticle, this.state.qte, 6).then(
-      (res) => {
-        if (res.data.message.success != null) {
-          var newLine = {
-            article: res.data.data.nom_article,
-            code_article: res.data.data.code,
-            qte: res.data.data.qte,
-          };
-
-          //Test if article existe deja
-          if (
-            this.dataPannierArt.find(
-              (items) => items.code_article === newLine.code_article,
-            )
-          ) {
-            this.dataPannierArt = this.dataPannierArt.map((item) =>
-              item.code_article == newLine.code_article
-                ? {...item, qte: parseInt(item.qte) + parseInt(newLine.qte)}
-                : item,
-            );
-          } else {
-            this.dataPannierArt.push(newLine);
-          }
-
-          console.log(this.dataPannierArt);
-          this.setState({dataPannier: this.dataPannierArt});
-          this.setState({
-            codeArticle: null,
-            qte: 0,
-          });
-          this._setErrorParams(1, res.data.message.success);
-          this.setState({isLoadingAction: !this.state.isLoadingAction});
-          return;
-        }
-        this._setErrorParams(0, res.data.message.errors);
+    this.setState({isLoadingAction: !this.state.isLoadingAction}, () => {
+      if (this.state.qte < 1) {
+        this._setErrorParams(0, 'La quantité est invalide');
         this.setState({isLoadingAction: !this.state.isLoadingAction});
-      },
-    );
+        return;
+      }
+    });
+    if (this.state.qte < 1) {
+      return;
+    }
+    getCreateLineArticleReception(this.state.codeArticle).then((res) => {
+      var newLine = {
+        id: res.data.data[0].id,
+        article: res.data.data[0].nom_article,
+        code_article: res.data.data[0].code_article,
+        qte: this.state.qte,
+      };
+
+      // Test if article existe deja
+      if (
+        this.dataPannierArt.find(
+          (items) => items.code_article === newLine.code_article,
+        )
+      ) {
+        this.dataPannierArt = this.dataPannierArt.map((item) =>
+          item.code_article == newLine.code_article
+            ? {...item, qte: parseInt(item.qte) + parseInt(newLine.qte)}
+            : item,
+        );
+      } else {
+        this.dataPannierArt.push(newLine);
+      }
+
+      console.log(res.data.data[0].code_article);
+      this.setState({dataPannier: this.dataPannierArt});
+      this.setState({
+        codeArticle: null,
+        qte: 0,
+      });
+      this._setErrorParams(1, 'Bien ajouté');
+      this.setState({isLoadingAction: !this.state.isLoadingAction});
+      return;
+    });
   };
   _handleChange = (key, val) => {
     this.setState({[key]: val}, () => console.log(this.state.selectedValue));

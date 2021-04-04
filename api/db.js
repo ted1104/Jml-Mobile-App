@@ -31,3 +31,11 @@ export function getCreateLineArticle(codearticle, qte, depot) {
     .then((response) => response)
     .catch((error) => console.log('Erreur request ' + error));
 }
+
+export function getCreateLineArticleReception(codeArticle) {
+  const url = URL_PATH + 'articles-search-by-code/' + codeArticle + '/code';
+  return axios
+    .get(url, {headers: TOKE_CONFIG})
+    .then((response) => response)
+    .catch((error) => console.log('Erreur request ' + error));
+}
