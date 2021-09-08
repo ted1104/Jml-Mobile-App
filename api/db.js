@@ -4,7 +4,7 @@ const TOKE_CONFIG = {
   authorization: '3bacb9ec-9fbc-4442-ab76-3a6e35b0a627',
   'Content-Type': 'multipart/form-data',
 };
-const URL_PATH = 'http://192.168.43.103/GestionBoutique/api/v1/';
+const URL_PATH = 'http://192.168.137.1/GestionBoutique/api/v1/';
 
 export async function login(username, pwd) {
   const url = URL_PATH + 'login-users-mobile';

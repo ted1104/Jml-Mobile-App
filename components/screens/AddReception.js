@@ -49,8 +49,8 @@ class AddReceptionsScreen extends React.Component {
     this.dataPannierArt = [];
     this.timerID;
     this.options = [
-      {label: 'Bukavu', value: 1},
-      {label: 'Goma', value: 2},
+      {label: 'Rwanda', value: 1},
+      {label: 'Dubai', value: 2},
     ];
   }
 
@@ -117,6 +117,7 @@ class AddReceptionsScreen extends React.Component {
       );
   };
 
+  _create;
   componentDidMount() {
     console.log('did mount');
   }
